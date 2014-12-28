@@ -11,6 +11,7 @@ set :repo_url, 'git@github.com:computalya/testpostgresapp.git'
 # set :deploy_to, '/var/www/my_app_name'
 set :deploy_to, '/opt/www/testpostgresapp'
 set :user, 'deploy'
+set :ssh_options, { :forward_agent => true }
 
 # Default value for :scm is :git
 # set :scm, :git
