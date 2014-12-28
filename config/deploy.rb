@@ -37,7 +37,7 @@ set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets}
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-amespace :deploy do
+namespace :deploy do
 
   %w[start stop restart].each do |command|
     desc 'Manage Unicorn'
