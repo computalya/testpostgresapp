@@ -16,7 +16,7 @@ role :db,  %w{deploy@192.168.1.52}
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
+server '192.168.1.52', user: 'deploy', roles: %w{web app}, my_property: :my_value
 
 
 # Custom SSH Options
