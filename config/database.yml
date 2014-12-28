@@ -81,5 +81,5 @@ test:
 production:
   <<: *default
   database: testpostgresapp_production
-  username: testpostgresapp
-  password: <%= ENV['TESTPOSTGRESAPP_DATABASE_PASSWORD'] %>
+#  username: testpostgresapp
+#  password: <%= ENV['TESTPOSTGRESAPP_DATABASE_PASSWORD'] %>

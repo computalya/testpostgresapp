@@ -2,13 +2,15 @@
 lock '3.3.5'
 
 set :application, 'testpostgresapp'
-set :repo_url, 'git@example.com:me/my_repo.git'
+set :repo_url, 'git@github.com:computalya/testpostgresapp.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 # Default deploy_to directory is /var/www/my_app_name
 # set :deploy_to, '/var/www/my_app_name'
+set :deploy_to, '/opt/www/testpostgresapp'
+set :user, 'deploy'
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -24,6 +26,7 @@ set :repo_url, 'git@example.com:me/my_repo.git'
 
 # Default value for :linked_files is []
 # set :linked_files, fetch(:linked_files, []).push('config/database.yml')
+set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets}
 
 # Default value for linked_dirs is []
 # set :linked_dirs, fetch(:linked_dirs, []).push('bin', 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
@@ -34,15 +37,17 @@ set :repo_url, 'git@example.com:me/my_repo.git'
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-namespace :deploy do
+amespace :deploy do
 
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
+  %w[start stop restart].each do |command|
+    desc 'Manage Unicorn'
+    task command do
+      on roles(:app), in: :sequence, wait: 1 do
+        execute "/etc/init.d/unicorn_#{fetch(:application)} #{command}"
+      end     
     end
   end
+
+  after :publishing, :restart
 
 end
